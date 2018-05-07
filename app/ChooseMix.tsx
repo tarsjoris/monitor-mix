@@ -1,21 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Channel from './channel/Channel';
+import { Header, Body, Title } from 'native-base';
+import { Text } from 'react-native';
+import Output from './output/Output';
 
 const ChooseMix = () => (
-	<View style={styles.container}>
-		<Channel />
+	<Header>
+		<Body>
+			<Output />
+		</Body>
 		<Text>hello</Text>
-	</View>
+	</Header>
 )
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
 
 export default ChooseMix
