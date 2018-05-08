@@ -1,15 +1,15 @@
-import React from 'react';
 import { Title } from 'native-base';
+import React from 'react';
 import { connect } from 'react-redux';
-import { IState, IOutputState } from '../IState'
+import { IOutputState, IState } from '../IState';
 
 interface IProps extends IOutputState {
 }
 
-const ChannelBase = (props: IProps) => {
-	const name = props.channels.filter(ch => ch.id === props.choice)[0].name
+const OutputBase = ({ channels, choice }: IProps) => {
+	const name = channels.filter(ch => ch.id === choice)[0].name
 	return <Title>{name}</Title>
 }
 const mapStateToProps = (state: IState): IProps => state.output
-const Channel = connect(mapStateToProps)(ChannelBase)
-export default Channel
+const Output = connect(mapStateToProps)(OutputBase)
+export default Output
