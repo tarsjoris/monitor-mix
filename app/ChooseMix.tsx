@@ -6,6 +6,7 @@ import { Dispatch, connect } from 'react-redux';
 import { ACTION_LOADING_DONE, ILoadingAction } from './ChooseMixReducer';
 import { IState } from './IState';
 import Output from './output/Output';
+import { makeConnection } from './xr18api/XR18API';
 
 interface IProps {
 	isReady: boolean,
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
 
 class ChooseMixBase extends React.Component<IProps> {
 	async loadAssetsAsync() {
+		makeConnection()
 		await Font.loadAsync({
 			'Roboto': require('native-base/Fonts/Roboto.ttf'),
 			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),

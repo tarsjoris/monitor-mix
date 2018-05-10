@@ -3,7 +3,7 @@ import { writePacket } from './osc';
 
 const PORT = 10024
 
-export const connect = () => {
+export const makeConnection = () => {
 	return createSocket("udp4")
 }
 
