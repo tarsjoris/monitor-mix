@@ -1,6 +1,11 @@
+export interface IArg {
+	type: string,
+	value: any
+}
+
 export interface IOSCMessage {
 	address: string,
-	args: any[]
+	args: IArg[]
 }
 
 export interface IOSCTimeTag {
@@ -13,14 +18,16 @@ export interface IOSCBundle {
 	packets: IOSCMessage | IOSCBundle[]
 }
 
+export interface IOptions {
+	metadata: boolean
+}
+
 export function readPacket(
-	data: Uint8Array,
-	options: any,
-	offsetState: any,
-	len: any
+	data: Buffer,
+	options?: IOptions
 ): IOSCMessage | IOSCBundle
 
 export function writePacket(
 	packet: IOSCMessage,
-	options: any
+	options: IOptions
 ): Uint8Array

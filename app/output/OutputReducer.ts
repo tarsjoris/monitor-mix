@@ -1,35 +1,46 @@
-import { IOutputState } from '../IState'
+import { IOutputState } from '../IState';
 
 const initialState: IOutputState = {
 	channels: [
 		{
 			id: 1,
-			name: "Tars",
-			color: "#FF0000"
+			name: "1",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
+		},
+		{
+			id: 2,
+			name: "2",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
 		},
 		{
 			id: 3,
-			name: "Kyra",
-			color: "#0000FF"
+			name: "3",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
 		},
 		{
 			id: 4,
-			name: "Lex",
-			color: "#00FF00"
+			name: "4",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
 		},
 		{
 			id: 5,
-			name: "Pieter",
-			color: "#00FF00"
+			name: "5",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
 		},
 		{
 			id: 6,
-			name: "Dries",
-			color: "#00FF00"
+			name: "6",
+			fgcolor: "#FF0000",
+			bgcolor: "#000000"
 		}
 	],
 	choice: 1
 }
-export const outputReducer = (state: IOutputState = initialState, action: string) => {
+export const outputReducer = (state: IOutputState = initialState, action: string): IOutputState => {
 	return state;
 }

@@ -1,11 +1,15 @@
-export interface IChooseMix {
+export interface IColor {
+	fgcolor: string,
+	bgcolor: string
+}
+
+export interface IChooseMixState {
 	isReady: boolean
 }
 
-export interface IOutputChannel {
+export interface IOutputChannel extends IColor {
 	id: number,
-	name: string,
-	color: string
+	name: string
 }
 
 export interface IOutputState {
@@ -13,7 +17,18 @@ export interface IOutputState {
 	choice: number
 }
 
+export interface IFader extends IColor {
+	id: number,
+	name: string,
+	position: number
+}
+
+export interface IFadersState {
+	faders: IFader[]
+}
+
 export interface IState {
 	output: IOutputState,
-	chooseMix: IChooseMix
+	chooseMix: IChooseMixState,
+	faders: IFadersState
 }

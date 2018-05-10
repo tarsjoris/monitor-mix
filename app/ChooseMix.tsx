@@ -1,10 +1,11 @@
 import { AppLoading, Constants, Font } from 'expo';
-import { Body, Button, Container, Header, Icon, Right, Text } from 'native-base';
+import { Body, Button, Container, Header, Icon, Right } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dispatch, connect } from 'react-redux';
 import { ACTION_LOADING_DONE, ILoadingAction } from './ChooseMixReducer';
 import { IState } from './IState';
+import Faders from './faders/Faders';
 import Output from './output/Output';
 import { makeConnection } from './xr18api/XR18API';
 
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 
 class ChooseMixBase extends React.Component<IProps> {
 	async loadAssetsAsync() {
-		makeConnection()
+		makeConnection("192.168.0.2")
 		await Font.loadAsync({
 			'Roboto': require('native-base/Fonts/Roboto.ttf'),
 			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
@@ -41,7 +42,7 @@ class ChooseMixBase extends React.Component<IProps> {
 						</Button>
 					</Right>
 				</Header>
-				<Text>hello</Text>
+				<Faders />
 			</Container>
 		}
 		else {

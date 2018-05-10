@@ -1,28 +1,39 @@
 import { Socket, createSocket } from 'react-native-udp';
-import { writePacket } from './osc';
+import { IArg, readPacket, writePacket } from './osc';
 
-const PORT = 10024
+const REMOTE_PORT = 10024
 
-export const makeConnection = () => {
-	return createSocket("udp4")
+export const makeConnection = (host: string) => {
+	const socket = createSocket("udp4")
+	socket.on("message", function (msg, rinfo) {
+		console.log(readPacket(msg, { metadata: true }))
+	})
+	socket.on('error', (err) => {
+		console.log(`server error:\n${err.stack}`)
+		socket.close()
+	});
+	socket.bind()
+	return socket
 }
 
 export const setChannelLevel = (socket: Socket, channel: number, output: number, level: number) => {
+	send(socket,
+		'/ch/' + pad(channel, 2) + '/mix/' + pad(output, 2) + '/level',
+		[{ type: 'f', value: level }]
+	);
+}
+
+const send = (socket: Socket, address: string, args: IArg[] = []) => {
 	const msg = writePacket(
 		{
-			address: '/ch/' + pad(channel, 2) + '/mix/' + pad(output, 2) + '/level',
-			args: [
-				{
-					type: 'f',
-					value: level
-				}
-			]
+			address: address,
+			args: args
 		},
 		{
 			metadata: true
 		}
 	)
-	socket.send(msg, 0, msg.length, PORT, '192.168.0.2');
+	socket.send(msg, 0, msg.length, REMOTE_PORT, '192.168.0.2')
 }
 
 const pad = (number: number, size: number) => {
