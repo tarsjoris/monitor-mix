@@ -3,11 +3,10 @@ import { Body, Button, Container, Header, Icon, Right } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dispatch, connect } from 'react-redux';
-import { ACTION_LOADING_DONE, ILoadingAction } from './ChooseMixReducer';
 import { IState } from './IState';
+import { ACTION_LOADING_DONE, ILoadingAction } from './MainReducer';
 import Faders from './faders/Faders';
 import Output from './output/Output';
-import { makeConnection } from './xr18api/XR18API';
 
 interface IProps {
 	isReady: boolean,
@@ -20,9 +19,9 @@ const styles = StyleSheet.create({
 	}
 })
 
-class ChooseMixBase extends React.Component<IProps> {
+class MainBase extends React.Component<IProps> {
 	async loadAssetsAsync() {
-		makeConnection("192.168.0.2")
+		//makeConnection("192.168.0.2")
 		await Font.loadAsync({
 			'Roboto': require('native-base/Fonts/Roboto.ttf'),
 			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
@@ -31,19 +30,21 @@ class ChooseMixBase extends React.Component<IProps> {
 
 	render() {
 		if (this.props.isReady) {
-			return <Container style={styles.container}>
-				<Header>
-					<Body>
-						<Output />
-					</Body>
-					<Right>
-						<Button transparent>
-							<Icon name="settings" />
-						</Button>
-					</Right>
-				</Header>
-				<Faders />
-			</Container>
+			return (
+				<Container style={styles.container}>
+					<Header>
+						<Body>
+							<Output />
+						</Body>
+						<Right>
+							<Button transparent>
+								<Icon name="settings" />
+							</Button>
+						</Right>
+					</Header>
+					<Faders />
+				</Container>
+			)
 		}
 		else {
 			return <AppLoading
@@ -54,9 +55,9 @@ class ChooseMixBase extends React.Component<IProps> {
 		}
 	}
 }
-const mapStateToProps = (state: IState) => ({ isReady: state.chooseMix.isReady })
+const mapStateToProps = (state: IState) => ({ isReady: state.main.isReady })
 const mapDispatchToProps = (dispatch: Dispatch<ILoadingAction>) => ({
 	loadingDone: () => dispatch({ type: ACTION_LOADING_DONE })
 })
-const ChooseMix = connect(mapStateToProps, mapDispatchToProps)(ChooseMixBase)
-export default ChooseMix
+const Main = connect(mapStateToProps, mapDispatchToProps)(MainBase)
+export default Main

@@ -36,7 +36,7 @@ const send = (socket: Socket, address: string, args: IArg[] = []) => {
 	socket.send(msg, 0, msg.length, REMOTE_PORT, '192.168.0.2')
 }
 
-const pad = (number: number, size: number) => {
+export const pad = (number: number, size: number) => {
 	let padder = ''
 	for (let i = 0; i < size; ++i) {
 		padder += '0'

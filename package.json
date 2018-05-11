@@ -12,6 +12,7 @@
 		"@types/react-native": "^0.55.11",
 		"@types/react-redux": "^5.0.19",
 		"@types/redux": "^3.6.0",
+		"@types/rx": "^4.1.1",
 		"jest-expo": "~27.0.0",
 		"react-native-scripts": "1.14.0",
 		"react-native-typescript-transformer": "^1.2.5",
@@ -36,6 +37,7 @@
 		"react-native": "~0.55.2",
 		"react-native-udp": "^2.3.1",
 		"react-redux": "^5.0.7",
-		"redux": "^4.0.0"
+		"redux": "^4.0.0",
+		"rx": "^4.1.0"
 	}
 }

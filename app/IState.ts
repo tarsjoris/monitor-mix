@@ -3,7 +3,7 @@ export interface IColor {
 	bgcolor: string
 }
 
-export interface IChooseMixState {
+export interface IMainState {
 	isReady: boolean
 }
 
@@ -29,6 +29,6 @@ export interface IFadersState {
 
 export interface IState {
 	output: IOutputState,
-	chooseMix: IChooseMixState,
+	main: IMainState,
 	faders: IFadersState
 }

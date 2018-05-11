@@ -12,7 +12,7 @@ const Fader = (props: IProps) => (
 			padding: 10,
 		}}>
 		<Text>{props.name}</Text>
-		<Slider style={{ width: '100%', marginLeft: 10 }} minimumValue={0} maximumValue={100} step={1} />
+		<Slider style={{ width: '100%', marginLeft: 10 }} minimumValue={0} maximumValue={100} step={1} value={props.position} />
 	</View>
 )
 export default Fader

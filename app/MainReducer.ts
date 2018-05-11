@@ -1,4 +1,4 @@
-import { IChooseMixState } from "./IState";
+import { IMainState } from "./IState";
 
 export interface ILoadingAction {
 	type: string
@@ -6,7 +6,7 @@ export interface ILoadingAction {
 
 export const ACTION_LOADING_DONE = "LOADING_DONE"
 
-export const chooseMixReducer = (state: IChooseMixState = { isReady: false }, action: ILoadingAction): IChooseMixState => {
+export const mainReducer = (state: IMainState = { isReady: false }, action: ILoadingAction): IMainState => {
 	switch (action.type) {
 		case ACTION_LOADING_DONE:
 			return { ...state, isReady: true }
