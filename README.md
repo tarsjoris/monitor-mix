@@ -6,8 +6,8 @@ React native app (Android/iOS) for controlling the monitor mix of a Behringer X 
 
 * npm i
 * (Apple only)
-** sudo npm install -g react-native-cli
-** react-native link react-native-udp
+  * sudo npm install -g react-native-cli
+  * react-native link react-native-udp
 * npm start
 
 # Links
