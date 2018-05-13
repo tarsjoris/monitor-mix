@@ -1,5 +1,5 @@
 {
-	"name": "xr18-in-my-ears",
+	"name": "monitor-mix",
 	"author": {
 		"name": "Tars Joris"
 	},
@@ -37,7 +37,8 @@
 		"react-native": "~0.55.2",
 		"react-native-udp": "^2.3.1",
 		"react-redux": "^5.0.7",
-		"redux": "^4.0.0",
+		"redux": "3.7.2",
+		"redux-observable": "^0.18.0",
 		"rx": "^4.1.0"
 	}
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Slider, Text, View } from 'react-native';
-import { IFader } from "../IState";
+import { IFaderState } from "./FaderState";
 
-interface IProps extends IFader {
+interface IProps extends IFaderState {
 }
 
 const Fader = (props: IProps) => (

@@ -1,17 +1,12 @@
-import { IFadersState } from '../IState';
+import { EActionTypes, IActionTypes } from '../Actions';
+import { CHANNEL_COUNT } from '../xr18api/XR18API';
+import { IFadersState } from './FadersState';
 
-export const ACTION_FADER_CHANGED = "FADER_CHANGED"
-
-export interface IFaderAction {
-	type: string,
-	fader: number,
-	value: number
-}
 
 const initialState: IFadersState = {
 	faders: []
 }
-for (var i = 0; i < 16; ++i) {
+for (var i = 0; i < CHANNEL_COUNT; ++i) {
 	initialState.faders.push({
 		id: i + 1,
 		name: "" + (i + 1),
@@ -21,14 +16,18 @@ for (var i = 0; i < 16; ++i) {
 	})
 }
 
-export const fadersReducer = (state: IFadersState = initialState, action: IFaderAction): IFadersState => {
+export const fadersReducer = (state: IFadersState = initialState, action: IActionTypes): IFadersState => {
 	switch (action.type) {
-		case ACTION_FADER_CHANGED:
-			const faders = state.faders.slice();
-			faders[action.fader - 1] = {
-				...faders[action.fader - 1],
-				position: action.value * 100
-			}
+		case EActionTypes.EXTERNAL_FADER_LEVEL:
+		case EActionTypes.INTERNAL_FADER_LEVEL:
+			const faders = state.faders.map(value =>
+				(value.id === action.fader) ?
+					{
+						...value,
+						position: action.value * 100
+					} :
+					value
+			)
 			return {
 				...state,
 				faders

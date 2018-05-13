@@ -1,8 +1,9 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { IFadersState, IState } from '../IState';
-import Fader from './Fader';
+import { IState } from '../IState';
+import { IFadersState } from './FadersState';
+import Fader from './fader/Fader';
 
 interface IProps extends IFadersState {
 }

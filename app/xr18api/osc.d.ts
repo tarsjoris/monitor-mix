@@ -15,7 +15,7 @@ export interface IOSCTimeTag {
 
 export interface IOSCBundle {
 	timeTag: IOSCTimeTag,
-	packets: IOSCMessage | IOSCBundle[]
+	packets: (IOSCMessage | IOSCBundle)[]
 }
 
 export interface IOptions {

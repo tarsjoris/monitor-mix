@@ -1,11 +1,11 @@
-import Rx from 'rx';
+import Rx from 'rxjs';
 import { IOSCMessage } from './xr18api/osc';
 
 
-export const demo = (eventsStream: Rx.IObserver<IOSCMessage>) => {
+export const demo = (eventsStream: Rx.Observer<IOSCMessage>) => {
 	const a = () => {
 		console.log("Sending event a")
-		eventsStream.onNext({
+		eventsStream.next({
 			address: '/ch/03/mix/01/level',
 			args: [{
 				type: 'f',
@@ -16,7 +16,7 @@ export const demo = (eventsStream: Rx.IObserver<IOSCMessage>) => {
 	}
 	const b = () => {
 		console.log("Sending event b")
-		eventsStream.onNext({
+		eventsStream.next({
 			address: '/ch/03/mix/01/level',
 			args: [{
 				type: 'f',

@@ -3,10 +3,11 @@ import { Body, Button, Container, Header, Icon, Right } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dispatch, connect } from 'react-redux';
-import { IState } from './IState';
-import { ACTION_LOADING_DONE, ILoadingAction } from './MainReducer';
-import Faders from './faders/Faders';
-import Output from './output/Output';
+import { IActionTypes } from '../Actions';
+import { IState } from './../IState';
+import Faders from './../faders/Faders';
+import Output from './../output/Output';
+import { createLoadingDone } from './MainActions';
 
 interface IProps {
 	isReady: boolean,
@@ -56,8 +57,8 @@ class MainBase extends React.Component<IProps> {
 	}
 }
 const mapStateToProps = (state: IState) => ({ isReady: state.main.isReady })
-const mapDispatchToProps = (dispatch: Dispatch<ILoadingAction>) => ({
-	loadingDone: () => dispatch({ type: ACTION_LOADING_DONE })
+const mapDispatchToProps = (dispatch: Dispatch<IActionTypes>) => ({
+	loadingDone: () => dispatch(createLoadingDone())
 })
 const Main = connect(mapStateToProps, mapDispatchToProps)(MainBase)
 export default Main

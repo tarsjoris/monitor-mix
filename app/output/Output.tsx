@@ -1,7 +1,8 @@
 import { Title } from 'native-base';
 import React from 'react';
 import { connect } from 'react-redux';
-import { IOutputState, IState } from '../IState';
+import { IState } from '../IState';
+import { IOutputState } from './OutputState';
 
 interface IProps extends IOutputState {
 }

@@ -1,31 +1,7 @@
-export interface IColor {
-	fgcolor: string,
-	bgcolor: string
-}
+import { IFadersState } from "./faders/FadersState";
+import { IMainState } from "./main/MainState";
+import { IOutputState } from "./output/OutputState";
 
-export interface IMainState {
-	isReady: boolean
-}
-
-export interface IOutputChannel extends IColor {
-	id: number,
-	name: string
-}
-
-export interface IOutputState {
-	channels: IOutputChannel[],
-	choice: number
-}
-
-export interface IFader extends IColor {
-	id: number,
-	name: string,
-	position: number
-}
-
-export interface IFadersState {
-	faders: IFader[]
-}
 
 export interface IState {
 	output: IOutputState,
