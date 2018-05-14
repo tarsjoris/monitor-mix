@@ -1,4 +1,4 @@
-import { IExternalFaderLevelAction, IInternalFaderLevelAction } from './faders/FadersActions';
+import { IExternalFaderLevelAction, IInternalFaderLevelAction } from './faders/fader/FaderActions';
 import { IInternalLoadingDoneAction } from './main/MainActions';
 import { IExternalOutputLevelAction, IInternalOutputChoiceAction, IInternalOutputLevelAction } from './output/OutputActions';
 

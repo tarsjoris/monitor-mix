@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { EActionTypes } from '../Actions';
+import { EActionTypes } from '../../Actions';
 
 export interface IFaderLevelAction extends Action {
 	fader: number

@@ -2,7 +2,7 @@ import { Epic, combineEpics } from 'redux-observable';
 import Rx from 'rxjs';
 import { EActionTypes, IActionTypes } from './Actions';
 import { IState } from './IState';
-import { createExternalFaderLevel } from './faders/FadersActions';
+import { createExternalFaderLevel } from './faders/fader/FaderActions';
 import { createExternalOutputLevel } from './output/OutputActions';
 import { CHANNEL_COUNT, XR18API, pad } from "./xr18api/XR18API";
 import { IOSCMessage } from "./xr18api/osc";

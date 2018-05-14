@@ -17,6 +17,9 @@ interface IProps {
 const styles = StyleSheet.create({
 	container: {
 		marginTop: Constants.statusBarHeight
+	},
+	header: {
+		backgroundColor: "#777777"
 	}
 })
 
@@ -33,7 +36,7 @@ class MainBase extends React.Component<IProps> {
 		if (this.props.isReady) {
 			return (
 				<Container style={styles.container}>
-					<Header>
+					<Header style={styles.header}>
 						<Body>
 							<Output />
 						</Body>

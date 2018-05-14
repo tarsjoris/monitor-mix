@@ -1,6 +1,7 @@
 import { EActionTypes, IActionTypes } from '../Actions';
 import { CHANNEL_COUNT } from '../xr18api/XR18API';
 import { IFadersState } from './FadersState';
+import { faderReducer } from './fader/FaderReducer';
 
 
 const initialState: IFadersState = {
@@ -21,12 +22,7 @@ export const fadersReducer = (state: IFadersState = initialState, action: IActio
 		case EActionTypes.EXTERNAL_FADER_LEVEL:
 		case EActionTypes.INTERNAL_FADER_LEVEL:
 			const faders = state.faders.map(value =>
-				(value.id === action.fader) ?
-					{
-						...value,
-						position: action.value * 100
-					} :
-					value
+				(value.id === action.fader) ? faderReducer(value, action) : value
 			)
 			return {
 				...state,

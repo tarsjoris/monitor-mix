@@ -1,4 +1,6 @@
+import { Container } from 'native-base';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { Store, applyMiddleware, combineReducers, createStore } from 'redux';
 import { Epic, createEpicMiddleware } from 'redux-observable';
@@ -35,12 +37,20 @@ const store: Store<IState> = createStore(
 	applyMiddleware(epicMiddleware)
 )
 
+const styles = StyleSheet.create({
+	main: {
+		backgroundColor: "#444444"
+	}
+})
+
 class App extends React.Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<Main />
-			</Provider>
+			<Container style={styles.main}>
+				<Provider store={store}>
+					<Main />
+				</Provider>
+			</Container>
 		)
 	}
 }
