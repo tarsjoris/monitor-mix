@@ -11,8 +11,7 @@ for (var i = 0; i < CHANNEL_COUNT; ++i) {
 	initialState.faders.push({
 		id: i + 1,
 		name: "" + (i + 1),
-		fgcolor: "#FF0000",
-		bgcolor: "#000000",
+		scribbleStyle: 0,
 		position: 0
 	})
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dispatch, connect } from 'react-redux';
 import { IActionTypes } from '../Actions';
+import { scribbleStyles } from '../Color';
 import { IState } from './../IState';
 import Faders from './../faders/Faders';
 import Output from './../output/Output';
@@ -11,6 +12,7 @@ import { createLoadingDone } from './MainActions';
 
 interface IProps {
 	isReady: boolean,
+	outputScribbleStyle: number,
 	loadingDone: () => any
 }
 
@@ -36,7 +38,7 @@ class MainBase extends React.Component<IProps> {
 		if (this.props.isReady) {
 			return (
 				<Container style={styles.container}>
-					<Header style={styles.header}>
+					<Header style={scribbleStyles[this.props.outputScribbleStyle].background}>
 						<Body>
 							<Output />
 						</Body>
@@ -59,7 +61,10 @@ class MainBase extends React.Component<IProps> {
 		}
 	}
 }
-const mapStateToProps = (state: IState) => ({ isReady: state.main.isReady })
+const mapStateToProps = (state: IState) => ({
+	isReady: state.main.isReady,
+	outputScribbleStyle: state.output.channels[state.output.choice].scribbleStyle
+})
 const mapDispatchToProps = (dispatch: Dispatch<IActionTypes>) => ({
 	loadingDone: () => dispatch(createLoadingDone())
 })

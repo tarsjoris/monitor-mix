@@ -5,6 +5,7 @@ import { IArg, IOSCBundle, IOSCMessage, readPacket, writePacket } from './osc';
 const REMOTE_PORT = 10024
 export const OUTPUT_COUNT = 6
 export const CHANNEL_COUNT = 17;
+export const AUX_CHANNEL = 17;
 
 export interface IAPIResult {
 
@@ -94,7 +95,7 @@ export class XR18API {
 
 	private getChannelPrefix = (channel: number) => {
 		switch (channel) {
-			case CHANNEL_COUNT:
+			case AUX_CHANNEL:
 				return '/rtn/aux'
 			default:
 				return '/ch/' + pad(channel, 2)

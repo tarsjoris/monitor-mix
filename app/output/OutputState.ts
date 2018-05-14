@@ -1,4 +1,4 @@
-import { IColor } from "../IColor";
+import { IColor } from "../Color";
 
 export interface IOutputChannel extends IColor {
 	id: number,

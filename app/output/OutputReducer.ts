@@ -11,20 +11,19 @@ for (var i = 0; i < OUTPUT_COUNT; ++i) {
 	initialState.channels.push({
 		id: i + 1,
 		name: "" + (i + 1),
-		fgcolor: "#FF0000",
-		bgcolor: "#000000"
+		scribbleStyle: 0
 	})
 }
 
 export const outputReducer = (state: IOutputState = initialState, action: IActionTypes): IOutputState => {
 	switch (action.type) {
-		case EActionTypes.ACTION_EXTERNAL_OUTPUT_LEVEL:
-		case EActionTypes.ACTION_INTERNAL_OUTPUT_LEVEL:
+		case EActionTypes.EXTERNAL_OUTPUT_LEVEL:
+		case EActionTypes.INTERNAL_OUTPUT_LEVEL:
 			return {
 				...state,
 				level: action.value
 			}
-		case EActionTypes.ACTION_INTERNAL_OUTPUT_CHOICE:
+		case EActionTypes.INTERNAL_OUTPUT_CHOICE:
 			return {
 				...state,
 				choice: action.choice

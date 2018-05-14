@@ -4,7 +4,7 @@ import { EActionTypes, IActionTypes } from './Actions';
 import { IState } from './IState';
 import { createExternalFaderLevel } from './faders/fader/FaderActions';
 import { createExternalOutputLevel } from './output/OutputActions';
-import { CHANNEL_COUNT, XR18API, pad } from "./xr18api/XR18API";
+import { AUX_CHANNEL, XR18API, pad } from "./xr18api/XR18API";
 import { IOSCMessage } from "./xr18api/osc";
 
 export type OutputChoiceSupplier = () => number
@@ -31,7 +31,7 @@ const processExternalAuxFaderLevelChangeEvents = (eventsStream$: Rx.Observable<I
 			return new RegExp("\/rtn\/aux\/mix\/" + pad(output, 2) + "\/level").test(message.address)
 		})
 		.map(message => createExternalFaderLevel(
-			CHANNEL_COUNT,
+			AUX_CHANNEL,
 			Number(message.args[0].value)
 		))
 
