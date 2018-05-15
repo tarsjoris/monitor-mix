@@ -11,7 +11,7 @@ interface IProps extends IOutputState {
 const OutputBase = ({ channels, choice }: IProps) => {
 	const channel = channels.filter(ch => ch.id === choice)[0]
 	const name = channel.name
-	return <Title style={scribbleStyles[channel.scribbleStyle].color}>{name}</Title>
+	return <Title style={scribbleStyles[channel.color].text}>{name}</Title>
 }
 const mapStateToProps = (state: IState): IProps => state.output
 const Output = connect(mapStateToProps)(OutputBase)

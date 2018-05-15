@@ -1,4 +1,4 @@
-import { IFadersState } from "./faders/FadersState";
+import { IInputsState } from "./inputs/InputsState";
 import { IMainState } from "./main/MainState";
 import { IOutputState } from "./output/OutputState";
 
@@ -6,5 +6,5 @@ import { IOutputState } from "./output/OutputState";
 export interface IState {
 	output: IOutputState,
 	main: IMainState,
-	faders: IFadersState
+	inputs: IInputsState
 }

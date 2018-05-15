@@ -2,14 +2,14 @@ import { Epic, combineEpics } from 'redux-observable';
 import Rx from 'rxjs';
 import { EActionTypes, IActionTypes } from './Actions';
 import { IState } from './IState';
-import { createExternalFaderLevel } from './faders/fader/FaderActions';
-import { createExternalOutputLevel } from './output/OutputActions';
+import { createExternalInputColor, createExternalInputLevel, createExternalInputName } from './inputs/input/InputActions';
+import { createExternalOutputColor, createExternalOutputLevel, createExternalOutputName } from './output/OutputActions';
 import { AUX_CHANNEL, XR18API, pad } from "./xr18api/XR18API";
 import { IOSCMessage } from "./xr18api/osc";
 
 export type OutputChoiceSupplier = () => number
 
-const processExternalChannelFaderLevelChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
+const processExternalChannelInputLevelChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
 	action$ => eventsStream$
 		.filter(message => {
 			const output = outputChoiceSupplier()
@@ -19,37 +19,105 @@ const processExternalChannelFaderLevelChangeEvents = (eventsStream$: Rx.Observab
 			vars: /\/ch\/([0-9]{2})\/mix\/[0-9]{2}\/level/.exec(message.address),
 			message
 		}))
-		.map(obj => createExternalFaderLevel(
+		.map(obj => createExternalInputLevel(
 			obj.vars != null ? Number(obj.vars[1]) : 0,
 			Number(obj.message.args[0].value)
 		))
 
-const processExternalAuxFaderLevelChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
+const processExternalChannelInputNameChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/ch\/[0-9]{2}\/config\/name/.test(message.address))
+		.map(message => ({
+			vars: /\/ch\/([0-9]{2})\/config\/name/.exec(message.address),
+			message
+		}))
+		.map(obj => createExternalInputName(
+			obj.vars != null ? Number(obj.vars[1]) : 0,
+			obj.message.args[0].value
+		))
+
+const processExternalChannelInputColorChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/ch\/[0-9]{2}\/config\/color/.test(message.address))
+		.map(message => ({
+			vars: /\/ch\/([0-9]{2})\/config\/color/.exec(message.address),
+			message
+		}))
+		.map(obj => createExternalInputColor(
+			obj.vars != null ? Number(obj.vars[1]) : 0,
+			Number(obj.message.args[0].value)
+		))
+
+const processExternalAuxInputLevelChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
 	action$ => eventsStream$
 		.filter(message => {
 			const output = outputChoiceSupplier()
 			return new RegExp("\/rtn\/aux\/mix\/" + pad(output, 2) + "\/level").test(message.address)
 		})
-		.map(message => createExternalFaderLevel(
+		.map(message => createExternalInputLevel(
 			AUX_CHANNEL,
 			Number(message.args[0].value)
 		))
+
+const processExternalAuxInputNameChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/rtn\/aux\/config\/name/.test(message.address))
+		.map(message => createExternalInputName(
+			AUX_CHANNEL,
+			message.args[0].value
+		))
+
+const processExternalAuxInputColorChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/rtn\/aux\/config\/color/.test(message.address))
+		.map(message => createExternalInputColor(
+			AUX_CHANNEL,
+			Number(message.args[0].value)
+		))
+
 
 const processExternalOutputLevelChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
 	action$ => eventsStream$
 		.filter(message => {
 			const output = outputChoiceSupplier()
-			return new RegExp("\/bus\/" + output + "\/mix/fader").test(message.address)
+			return new RegExp("\/bus\/" + output + "\/mix/input").test(message.address)
 		})
 		.map(message => createExternalOutputLevel(
 			Number(message.args[0].value)
 		))
 
-const sendExternalFaderLevelEvents = (xr18API: XR18API): Epic<IActionTypes, IState> =>
+const processExternalOutputNameChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/bus\/[0-9]\/config\/name/.test(message.address))
+		.map(message => {
+			console.log('name change')
+			return ({
+				vars: /\/bus\/([0-9])\/config\/name/.exec(message.address),
+				message
+			})
+		})
+		.map(obj => createExternalOutputName(
+			obj.vars != null ? Number(obj.vars[1]) : 0,
+			obj.message.args[0].value
+		))
+
+const processExternalOutputColorChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
+	action$ => eventsStream$
+		.filter(message => /\/bus\/[0-9]\/config\/color/.test(message.address))
+		.map(message => ({
+			vars: /\/bus\/([0-9])\/config\/color/.exec(message.address),
+			message
+		}))
+		.map(obj => createExternalOutputColor(
+			obj.vars != null ? Number(obj.vars[1]) : 0,
+			Number(obj.message.args[0].value)
+		))
+
+const sendExternalInputLevelEvents = (xr18API: XR18API): Epic<IActionTypes, IState> =>
 	action$ => action$
 		.filter(action => {
-			if (action.type === EActionTypes.INTERNAL_FADER_LEVEL) {
-				xr18API.setChannelLevel(action.fader, action.value)
+			if (action.type === EActionTypes.INTERNAL_INPUT_LEVEL) {
+				xr18API.setChannelLevel(action.input, action.value)
 			}
 			return false
 		})
@@ -74,10 +142,16 @@ const processInternalOutputChoiceEvents = (xr18API: XR18API): Epic<IActionTypes,
 
 export const wiringEpic = (eventsStream$: Rx.Observable<IOSCMessage>, xr18API: XR18API, outputChoiceSupplier: OutputChoiceSupplier): Epic<IActionTypes, IState> =>
 	combineEpics(
-		processExternalChannelFaderLevelChangeEvents(eventsStream$, outputChoiceSupplier),
-		processExternalAuxFaderLevelChangeEvents(eventsStream$, outputChoiceSupplier),
+		processExternalChannelInputLevelChangeEvents(eventsStream$, outputChoiceSupplier),
+		processExternalChannelInputNameChangeEvents(eventsStream$),
+		processExternalChannelInputColorChangeEvents(eventsStream$),
+		processExternalAuxInputLevelChangeEvents(eventsStream$, outputChoiceSupplier),
+		processExternalAuxInputNameChangeEvents(eventsStream$),
+		processExternalAuxInputColorChangeEvents(eventsStream$),
 		processExternalOutputLevelChangeEvents(eventsStream$, outputChoiceSupplier),
-		sendExternalFaderLevelEvents(xr18API),
+		processExternalOutputNameChangeEvents(eventsStream$),
+		processExternalOutputColorChangeEvents(eventsStream$),
+		sendExternalInputLevelEvents(xr18API),
 		sendExternalOutputLevelEvents(xr18API),
 		processInternalOutputChoiceEvents(xr18API)
 	)

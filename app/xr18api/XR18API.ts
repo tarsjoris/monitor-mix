@@ -112,7 +112,7 @@ export class XR18API {
 		this.send(this.getOutputLevelAddress())
 
 	private getOutputLevelAddress = () =>
-		this.getOutputPrefix() + '/mix/fader'
+		this.getOutputPrefix() + '/mix/input'
 
 	private getOutputPrefix = () => '/bus/' + this.output
 

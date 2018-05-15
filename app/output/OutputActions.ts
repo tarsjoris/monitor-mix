@@ -27,8 +27,36 @@ export const createInternalOutputLevel = (value: number): IInternalOutputLevelAc
 	}
 )
 
+export interface IExternalOutputNameAction extends Action {
+	type: EActionTypes.EXTERNAL_OUTPUT_NAME
+	channel: number
+	name: string
+}
+
+export const createExternalOutputName = (channel: number, name: string): IExternalOutputNameAction => (
+	{
+		type: EActionTypes.EXTERNAL_OUTPUT_NAME,
+		channel,
+		name
+	}
+)
+
+export interface IExternalOutputColorAction extends Action {
+	type: EActionTypes.EXTERNAL_OUTPUT_COLOR
+	channel: number
+	color: number
+}
+
+export const createExternalOutputColor = (channel: number, color: number): IExternalOutputColorAction => (
+	{
+		type: EActionTypes.EXTERNAL_OUTPUT_COLOR,
+		channel,
+		color
+	}
+)
+
 export interface IInternalOutputChoiceAction extends Action {
-	type: EActionTypes.INTERNAL_OUTPUT_CHOICE,
+	type: EActionTypes.INTERNAL_OUTPUT_CHOICE
 	choice: number
 }
 

@@ -9,7 +9,7 @@ import { IActionTypes } from './app/Actions';
 import { demo } from './app/Demo';
 import { IState } from './app/IState';
 import { wiringEpic } from './app/Wiring';
-import { fadersReducer } from './app/faders/FadersReducer';
+import { inputsReducer } from './app/inputs/InputsReducer';
 import Main from './app/main/Main';
 import { mainReducer } from './app/main/MainReducer';
 import { outputReducer } from './app/output/OutputReducer';
@@ -19,7 +19,7 @@ import { IOSCMessage } from './app/xr18api/osc';
 const rootReducer = combineReducers<IState>({
 	main: mainReducer,
 	output: outputReducer,
-	faders: fadersReducer
+	inputs: inputsReducer
 })
 
 const eventsStream = new Rx.Subject<IOSCMessage>()
