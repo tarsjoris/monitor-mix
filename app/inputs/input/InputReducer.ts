@@ -5,10 +5,9 @@ import { IInputState } from './InputState';
 export const inputReducer = (state: IInputState, action: IActionTypes): IInputState => {
 	switch (action.type) {
 		case EActionTypes.EXTERNAL_INPUT_LEVEL:
-		case EActionTypes.INTERNAL_INPUT_LEVEL:
 			return {
 				...state,
-				position: action.value * 100
+				position: action.value
 			}
 		case EActionTypes.EXTERNAL_INPUT_NAME:
 			return {

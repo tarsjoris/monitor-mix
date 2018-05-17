@@ -35,7 +35,6 @@ const outputChannelReducer = (state: IOutputChannel, action: IActionTypes): IOut
 export const outputReducer = (state: IOutputState = initialState, action: IActionTypes): IOutputState => {
 	switch (action.type) {
 		case EActionTypes.EXTERNAL_OUTPUT_LEVEL:
-		case EActionTypes.INTERNAL_OUTPUT_LEVEL:
 			return {
 				...state,
 				level: action.value

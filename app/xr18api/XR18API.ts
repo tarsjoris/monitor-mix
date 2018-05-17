@@ -117,6 +117,7 @@ export class XR18API {
 	private getOutputPrefix = () => '/bus/' + this.output
 
 	private send = (address: string, args: IArg[] = []) => {
+		console.log("Send event " + address)
 		if (this.socket == undefined) {
 			return
 		}
