@@ -38,7 +38,7 @@ class MainBase extends React.Component<IProps> {
 			'Roboto': require('native-base/Fonts/Roboto.ttf'),
 			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
 		})
-		//xr18API.makeConnection()
+		xr18API.makeConnection()
 	}
 
 	render() {

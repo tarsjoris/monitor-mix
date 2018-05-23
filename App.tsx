@@ -6,7 +6,6 @@ import { Store, applyMiddleware, combineReducers, createStore } from 'redux';
 import { Epic, createEpicMiddleware } from 'redux-observable';
 import Rx from 'rxjs';
 import { IActionTypes } from './app/Actions';
-import { demo } from './app/Demo';
 import { IState } from './app/IState';
 import { wiringEpic } from './app/Wiring';
 import { inputsReducer } from './app/inputs/InputsReducer';
@@ -56,4 +55,4 @@ class App extends React.Component {
 }
 export default App
 
-demo(eventsStream)
+//demo(eventsStream)
