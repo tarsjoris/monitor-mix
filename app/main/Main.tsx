@@ -44,7 +44,7 @@ class MainBase extends React.Component<IProps> {
 					</Body>
 					<Right>
 						<Button transparent onPress={this.props.refreshParameters}>
-							<Icon name="settings" />
+							<Icon name="autorenew" />
 						</Button>
 					</Right>
 				</Header>
