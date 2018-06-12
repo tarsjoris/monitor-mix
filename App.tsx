@@ -48,7 +48,7 @@ class App extends React.Component {
 		return (
 			<Container style={styles.main}>
 				<Provider store={store}>
-					<Main />
+					<Main xr18API={xr18API} />
 				</Provider>
 			</Container>
 		)

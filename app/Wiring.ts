@@ -89,13 +89,10 @@ const processExternalOutputLevelChangeEvents = (eventsStream$: Rx.Observable<IOS
 const processExternalOutputNameChangeEvents = (eventsStream$: Rx.Observable<IOSCMessage>): Epic<IActionTypes, IState> =>
 	action$ => eventsStream$
 		.filter(message => /\/bus\/[0-9]\/config\/name/.test(message.address))
-		.map(message => {
-			console.log('name change')
-			return ({
-				vars: /\/bus\/([0-9])\/config\/name/.exec(message.address),
-				message
-			})
-		})
+		.map(message => ({
+			vars: /\/bus\/([0-9])\/config\/name/.exec(message.address),
+			message
+		}))
 		.map(obj => createExternalOutputName(
 			obj.vars != null ? Number(obj.vars[1]) : 0,
 			obj.message.args[0].value
@@ -112,6 +109,15 @@ const processExternalOutputColorChangeEvents = (eventsStream$: Rx.Observable<IOS
 			obj.vars != null ? Number(obj.vars[1]) : 0,
 			Number(obj.message.args[0].value)
 		))
+
+const processInternalRefreshParametersEvents = (xr18API: XR18API): Epic<IActionTypes, IState> =>
+	action$ => action$
+		.filter(action => {
+			if (action.type === EActionTypes.INTERNAL_REFRESH_PARAMETERS) {
+				xr18API.refreshParameters()
+			}
+			return false
+		})
 
 const sendExternalInputLevelEvents = (xr18API: XR18API): Epic<IActionTypes, IState> =>
 	action$ => action$
@@ -151,6 +157,7 @@ export const wiringEpic = (eventsStream$: Rx.Observable<IOSCMessage>, xr18API: X
 		processExternalOutputLevelChangeEvents(eventsStream$, outputChoiceSupplier),
 		processExternalOutputNameChangeEvents(eventsStream$),
 		processExternalOutputColorChangeEvents(eventsStream$),
+		processInternalRefreshParametersEvents(xr18API),
 		sendExternalInputLevelEvents(xr18API),
 		sendExternalOutputLevelEvents(xr18API),
 		processInternalOutputChoiceEvents(xr18API)

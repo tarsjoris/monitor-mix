@@ -1,9 +1,10 @@
 import { IExternalInputColorAction, IExternalInputLevelAction, IExternalInputNameAction, IInternalInputLevelAction } from './inputs/input/InputActions';
-import { IInternalLoadingDoneAction } from './main/MainActions';
+import { IInternalLoadingDoneAction, IInternalRefreshParemetersAction } from './main/MainActions';
 import { IExternalOutputColorAction, IExternalOutputLevelAction, IExternalOutputNameAction, IInternalOutputChoiceAction, IInternalOutputLevelAction } from './output/OutputActions';
 
 export enum EActionTypes {
 	INTERNAL_LOADING_DONE = "INTERNAL_LOADING_DONE",
+	INTERNAL_REFRESH_PARAMETERS = "INTERNAL_REFRESH_PARAMETERS",
 	EXTERNAL_OUTPUT_LEVEL = "EXTERNAL_OUTPUT_LEVEL",
 	EXTERNAL_OUTPUT_NAME = "EXTERNAL_OUTPUT_NAME",
 	EXTERNAL_OUTPUT_COLOR = "EXTERNAL_OUTPUT_COLOR",
@@ -17,6 +18,7 @@ export enum EActionTypes {
 
 export type IActionTypes =
 	IInternalLoadingDoneAction |
+	IInternalRefreshParemetersAction |
 	IExternalOutputLevelAction |
 	IInternalOutputLevelAction |
 	IExternalOutputNameAction |

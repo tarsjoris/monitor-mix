@@ -10,3 +10,13 @@ export const createLoadingDone = (): IInternalLoadingDoneAction => (
 		type: EActionTypes.INTERNAL_LOADING_DONE
 	}
 )
+
+export interface IInternalRefreshParemetersAction extends Action {
+	type: EActionTypes.INTERNAL_REFRESH_PARAMETERS
+}
+
+export const createRefreshParameters = (): IInternalRefreshParemetersAction => (
+	{
+		type: EActionTypes.INTERNAL_REFRESH_PARAMETERS
+	}
+)

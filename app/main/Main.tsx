@@ -2,18 +2,22 @@ import { AppLoading, Constants, Font } from 'expo';
 import { Body, Button, Container, Header, Icon, Right } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Dispatch, connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { IActionTypes } from '../Actions';
 import { scribbleStyles } from '../Color';
-import { IState } from './../IState';
+import OutputSelection from '../outputselection/OutputSelection';
+import { XR18API } from '../xr18api/XR18API';
 import Inputs from './../inputs/Inputs';
+import { IState } from './../IState';
 import Output from './../output/Output';
-import { createLoadingDone } from './MainActions';
+import { createLoadingDone, createRefreshParameters } from './MainActions';
 
 interface IProps {
 	isReady: boolean,
+	xr18API: XR18API,
 	outputColor: number,
-	loadingDone: () => any
+	loadingDone: () => any,
+	refreshParameters: () => any
 }
 
 const styles = StyleSheet.create({
@@ -29,12 +33,12 @@ const styles = StyleSheet.create({
 })
 
 class MainBase extends React.Component<IProps> {
-	async loadAssetsAsync() {
-		//makeConnection("192.168.0.2")
+	async loadAssetsAsync(xr18API: XR18API) {
 		await Font.loadAsync({
 			'Roboto': require('native-base/Fonts/Roboto.ttf'),
 			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
 		})
+		//xr18API.makeConnection()
 	}
 
 	render() {
@@ -47,21 +51,23 @@ class MainBase extends React.Component<IProps> {
 							<Output />
 						</Body>
 						<Right>
-							<Button transparent>
+							<Button transparent onPress={this.props.refreshParameters}>
 								<Icon name="settings" />
 							</Button>
 						</Right>
 					</Header>
+					<OutputSelection />
 					<Inputs />
 				</Container>
 			)
 		}
 		else {
 			return <AppLoading
-				startAsync={this.loadAssetsAsync}
+				startAsync={() => this.loadAssetsAsync(this.props.xr18API)}
 				onFinish={() => this.props.loadingDone()}
 				onError={console.warn}
 			/>
+
 		}
 	}
 }
@@ -73,7 +79,8 @@ const mapStateToProps = (state: IState) => {
 	}
 }
 const mapDispatchToProps = (dispatch: Dispatch<IActionTypes>) => ({
-	loadingDone: () => dispatch(createLoadingDone())
+	loadingDone: () => dispatch(createLoadingDone()),
+	refreshParameters: () => dispatch(createRefreshParameters())
 })
 const Main = connect(mapStateToProps, mapDispatchToProps)(MainBase)
 export default Main

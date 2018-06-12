@@ -38,8 +38,8 @@ export class XR18API {
 		socket.bind()
 		this.socket = socket;
 
-		this.fetchConfigs()
-		this.fetchLevels()
+		this.requestChanges()
+		this.refreshParameters()
 	}
 
 	closeConnection = () => {
@@ -49,7 +49,12 @@ export class XR18API {
 		}
 	}
 
-	fetchConfigs = () => {
+	refreshParameters = () => {
+		this.fetchConfigs()
+		this.fetchLevels()
+	}
+
+	private fetchConfigs = () => {
 		for (var i = 0; i < OUTPUT_COUNT; ++i) {
 			this.fetchOutputConfig(i + 1)
 		}
@@ -116,6 +121,13 @@ export class XR18API {
 
 	private getOutputPrefix = () => '/bus/' + this.output
 
+	private requestChanges = () => {
+		if (this.socket != null) {
+			this.send('/xremote')
+			setTimeout(this.requestChanges, 7500)
+		}
+	}
+
 	private send = (address: string, args: IArg[] = []) => {
 		console.log("Send event " + address)
 		if (this.socket == undefined) {
@@ -135,6 +147,7 @@ export class XR18API {
 
 	private onPacket = (packet: IOSCMessage | IOSCBundle) => {
 		if ('address' in packet) {
+			console.log("Got event " + packet.address)
 			this.observer.next(packet)
 		}
 		else {

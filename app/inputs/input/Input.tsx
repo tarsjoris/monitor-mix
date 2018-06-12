@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
 	}
 })
 
-
-
 const InputBase = (props: IProps) => {
 	const scribbleStyle = scribbleStyles[props.color]
 	return (
